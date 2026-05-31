@@ -483,6 +483,12 @@
     font-size: 13px;
     line-height: 1.5;
   }
+  .mobile-editor.is-open {
+    display: block;
+  }
+  #toggleMobileEditor {
+    display: none;
+  }
 
   @media (max-width: 700px) {
     html {
@@ -527,18 +533,20 @@
       max-width: 768px;
       box-shadow: 0 8px 26px rgba(0,0,0,.45);
     }
-    /* スマホではカード上の細かい入力欄を誤タップしやすいため、下の大きい入力欄を使う */
+    /* スマホでもカード上の「名前：」などの横を直接タップして入力できるようにする */
     .card .field,
     .card .memo,
-    .card .select-field,
-    .card .birthday-picker {
-      pointer-events: none;
+    .card .select-field {
+      pointer-events: auto;
+      -webkit-user-select: text;
+      user-select: text;
+      touch-action: manipulation;
     }
     .card .icon-box {
       pointer-events: auto;
     }
-    .mobile-editor {
-      display: block;
+    #toggleMobileEditor {
+      display: inline-block;
     }
     .mobile-grid {
       grid-template-columns: 1fr;
@@ -616,13 +624,13 @@
         <option value="薔薇色の月">薔薇色の月</option>
         <option value="もーいーかい？">もーいーかい？</option>
         <option value="輪廻る">輪廻る</option>
-        <option value="ホラークイーン">ホラークイーン</option>
       </select>
       <button type="button" id="removeLastSong">最後の曲を削除</button>
       <button type="button" id="clearSongs">曲を消す</button>
       <button type="button" id="clearIcon">アイコンを消す</button>
       <button type="button" id="resetIconTransform">アイコン位置リセット</button>
       <button type="button" id="clearText">入力欄を空にする</button>
+      <button type="button" id="toggleMobileEditor">フォームから入力</button>
       <button type="button" id="savePng">保存</button>
     </div>
 
@@ -659,12 +667,12 @@
       <textarea id="freeSpace" class="memo" placeholder=""></textarea>
     </div>
 
-    <p class="creator-credit">画像作成者：X(Twitter)/　कㄑ”‎ ^. .^ ੭（@uxwou_4）様</p>
+    <p class="creator-credit">画像作成者：Twitter / X　कㄑ”‎ ^. .^ ੭（@uxwou_4）様</p>
     <p class="save-status" id="saveStatus" role="status" aria-live="polite"></p>
 
     <div class="mobile-editor" id="mobileEditor">
-      <h2>スマホ入力欄</h2>
-      <p class="mobile-note">スマホではこちらの大きい入力欄で編集できます。入力内容は上のカードに自動反映されます。</p>
+      <h2>フォーム入力欄</h2>
+      <p class="mobile-note">カード上を直接タップして入力しづらい場合は、この大きい入力欄から編集できます。入力内容は上のカードに自動反映されます。</p>
       <div class="mobile-grid">
         <div class="mobile-row">
           <label for="mName">名前</label>
@@ -711,11 +719,13 @@
       <div class="mobile-actions">
         <label class="file-button" for="fileInput">アイコン画像を選択</label>
         <button type="button" id="mResetIconTransform">アイコン位置リセット</button>
+        <button type="button" id="mCloseMobileEditor">フォームを閉じる</button>
         <button type="button" id="mSavePng">保存</button>
       </div>
     </div>
 
     <p class="hint">
+      スマホでもカード上の入力欄を直接タップして編集できます。入力しづらい場合は「フォームから入力」を使ってください。<br>
       入力内容・推し選択・好きな曲（最大4曲）・アイコン画像・アイコンの拡大率と位置はこのブラウザに自動保存されます。<br>
       アイコン画像はドラッグで位置調整、スマホのピンチまたはPCのマウスホイールで拡大縮小できます。完成後は「保存」ボタンでPNG形式の画像として保存できます。
     </p>
@@ -723,8 +733,8 @@
 
 <script>
 (() => {
-  const STORAGE_KEY = "haine_profile_card_v17_png_save";
-  const OLD_STORAGE_KEYS = ["haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
+  const STORAGE_KEY = "haine_profile_card_v18_direct_mobile_input";
+  const OLD_STORAGE_KEYS = ["haine_profile_card_v17_png_save", "haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
   const ids = ["name", "callname", "age", "gender", "birthday", "favoritePoint", "freeSpace"];
   const birthday = document.getElementById("birthday");
   const autoFitInputIds = ["name", "callname", "age", "gender", "birthday"];
@@ -757,8 +767,7 @@
     "botばっか",
     "薔薇色の月",
     "もーいーかい？",
-    "輪廻る",
-    "ホラークイーン"
+    "輪廻る"
   ];
   let selectedSongs = [];
   const MAX_SONGS = 4;
@@ -1306,6 +1315,26 @@
     renderMobileSongs();
   }
 
+  function setMobileEditorOpen(open, scrollToEditor = false) {
+    const editor = document.getElementById("mobileEditor");
+    const toggleButton = document.getElementById("toggleMobileEditor");
+    if (!editor) return;
+    editor.classList.toggle("is-open", !!open);
+    if (toggleButton) toggleButton.textContent = open ? "フォームを閉じる" : "フォームから入力";
+    if (open) {
+      syncMobileFromCard();
+      if (scrollToEditor) {
+        setTimeout(() => editor.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+      }
+    }
+  }
+
+  function toggleMobileEditorPanel() {
+    const editor = document.getElementById("mobileEditor");
+    const willOpen = !(editor && editor.classList.contains("is-open"));
+    setMobileEditorOpen(willOpen, willOpen);
+  }
+
   function setupMobileEditor() {
     const mobile = getMobileControls();
     if (!mobile.name) return;
@@ -1356,6 +1385,8 @@
         resetIconTransform(true);
       });
     }
+    const closeMobileEditor = document.getElementById("mCloseMobileEditor");
+    if (closeMobileEditor) closeMobileEditor.addEventListener("click", () => setMobileEditorOpen(false));
     document.getElementById("mSavePng").addEventListener("click", saveCardAsPng);
   }
 
@@ -1613,6 +1644,9 @@
     saveState();
     syncMobileFromCard();
   });
+
+  const toggleMobileEditorButton = document.getElementById("toggleMobileEditor");
+  if (toggleMobileEditorButton) toggleMobileEditorButton.addEventListener("click", toggleMobileEditorPanel);
 
   document.getElementById("savePng").addEventListener("click", saveCardAsPng);
 
