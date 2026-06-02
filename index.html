@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ハイネ自己紹介カード 入力版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Butcherman&family=Creepster&family=Dela+Gothic+One&family=DotGothic16&family=Eater&family=Hina+Mincho&family=Kaisei+Decol&family=New+Tegomin&family=Nosifer&family=Reggae+One&family=Rubik+Wet+Paint&family=Yuji+Syuku&family=Zen+Kurenaido&display=swap" rel="stylesheet">
 <style>
   :root {
     --card-ratio: 3 / 4;
@@ -11,6 +14,13 @@
     --panel: #141414;
     --text: #fff;
   }
+
+  /*
+    フォントについて：
+    - この版では、GitHub Pages上でGoogle Fontsを読み込む設定を追加しています。
+    - フォントファイル自体はZIPに同梱せず、HTMLからGoogle Fontsを参照します。
+    - 独自のWebフォントを使いたい場合は、fonts フォルダに .woff2 を置き、@font-face と fontSelect の選択肢、fontClasses に追加してください。
+  */
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -667,26 +677,112 @@
     --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
   }
 
-  /* フォント選択：PCに入っているフォントが優先して使われます */
-  .card.font-mincho-horror {
+  /* フォント選択：Google Fonts + 端末フォント。body側にも同じクラスを付けてフォーム入力欄にも反映します。 */
+  .card.font-mincho-horror,
+  body.font-mincho-horror {
     --entry-font: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", "Yu Gothic", "Meiryo", serif;
+    --form-entry-font: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", "Yu Gothic", "Meiryo", serif;
     --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.15);
   }
-  .card.font-retro-dot {
+  .card.font-retro-dot,
+  body.font-retro-dot {
     --entry-font: "DotGothic16", "MS Gothic", "Yu Gothic Mono", "Consolas", monospace;
+    --form-entry-font: "DotGothic16", "MS Gothic", "Yu Gothic Mono", "Consolas", monospace;
     --entry-shadow: 1px 1px 0 #000;
   }
-  .card.font-bold-gothic {
+  .card.font-bold-gothic,
+  body.font-bold-gothic {
     --entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --form-entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
     --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
   }
-  .card.font-brush-horror {
+  .card.font-brush-horror,
+  body.font-brush-horror {
     --entry-font: "HG行書体", "HGP行書体", "HGS行書体", "Yu Mincho", "MS Mincho", serif;
+    --form-entry-font: "HG行書体", "HGP行書体", "HGS行書体", "Yu Mincho", "MS Mincho", serif;
     --entry-shadow: 1px 1px 0 #000, 0 0 6px rgba(255,255,255,.2);
   }
-  .card.font-hand-horror {
+  .card.font-hand-horror,
+  body.font-hand-horror {
     --entry-font: "HGS教科書体", "HG教科書体", "Yu Mincho", "MS Mincho", serif;
+    --form-entry-font: "HGS教科書体", "HG教科書体", "Yu Mincho", "MS Mincho", serif;
     --entry-shadow: 1px 1px 0 #000, 0 0 4px rgba(255,255,255,.16);
+  }
+
+  /* Google Fonts：日本語向け */
+  .card.font-yuji-syuku,
+  body.font-yuji-syuku {
+    --entry-font: "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --form-entry-font: "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-shadow: 1px 1px 0 #000, 0 0 7px rgba(255,255,255,.18);
+  }
+  .card.font-new-tegomin,
+  body.font-new-tegomin {
+    --entry-font: "New Tegomin", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --form-entry-font: "New Tegomin", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-shadow: 1px 1px 0 #000, 0 0 6px rgba(255,255,255,.16);
+  }
+  .card.font-hina-mincho,
+  body.font-hina-mincho {
+    --entry-font: "Hina Mincho", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --form-entry-font: "Hina Mincho", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
+  }
+  .card.font-kaisei-decol,
+  body.font-kaisei-decol {
+    --entry-font: "Kaisei Decol", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --form-entry-font: "Kaisei Decol", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
+  }
+  .card.font-zen-kurenaido,
+  body.font-zen-kurenaido {
+    --entry-font: "Zen Kurenaido", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --form-entry-font: "Zen Kurenaido", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
+  }
+  .card.font-reggae-one,
+  body.font-reggae-one {
+    --entry-font: "Reggae One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --form-entry-font: "Reggae One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
+  }
+  .card.font-dela-gothic,
+  body.font-dela-gothic {
+    --entry-font: "Dela Gothic One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --form-entry-font: "Dela Gothic One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
+  }
+
+  /* Google Fonts：英字ホラー。日本語は後ろの日本語フォントにフォールバックします。 */
+  .card.font-creepster,
+  body.font-creepster {
+    --entry-font: "Creepster", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --form-entry-font: "Creepster", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
+  }
+  .card.font-nosifer,
+  body.font-nosifer {
+    --entry-font: "Nosifer", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --form-entry-font: "Nosifer", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
+  }
+  .card.font-eater,
+  body.font-eater {
+    --entry-font: "Eater", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --form-entry-font: "Eater", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
+  }
+  .card.font-butcherman,
+  body.font-butcherman {
+    --entry-font: "Butcherman", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --form-entry-font: "Butcherman", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
+  }
+  .card.font-rubik-wet,
+  body.font-rubik-wet {
+    --entry-font: "Rubik Wet Paint", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --form-entry-font: "Rubik Wet Paint", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
 
 
@@ -866,12 +962,16 @@
     padding: 10px 11px;
     font-size: 16px;
     line-height: 1.4;
-    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif;
+    font-family: var(--form-entry-font, "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif);
     outline: none;
   }
   .mobile-editor textarea {
     min-height: 110px;
     resize: vertical;
+  }
+  .mobile-selected-list,
+  .song-option-button {
+    font-family: var(--form-entry-font, "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif);
   }
   .mobile-actions {
     display: flex;
@@ -898,8 +998,13 @@
   .mobile-editor.is-open {
     display: block;
   }
+  .bottom-actions {
+    width: min(100%, var(--card-max-width, 768px));
+    margin: 10px auto 0;
+    text-align: center;
+  }
   #toggleMobileEditor {
-    display: none;
+    display: inline-block;
   }
 
   @media (max-width: 700px) {
@@ -991,7 +1096,7 @@
 
   @media print {
     body { background: #fff; }
-    .toolbar, .hint, .mobile-editor { display: none; }
+    .toolbar, .hint, .mobile-editor, .bottom-actions { display: none; }
     .app { width: 100%; padding: 0; }
     .card {
       width: 100vw;
@@ -1169,18 +1274,35 @@
       <label class="file-button" for="fileInput">アイコン画像を選択</label>
       <input id="fileInput" type="file" accept="image/*">
       <select id="fontSelect" title="入力文字のフォント">
-        <option value="font-mincho-horror">明朝ホラー</option>
-        <option value="font-retro-dot">レトロドット風</option>
-        <option value="font-bold-gothic">太字ゴシック</option>
-        <option value="font-brush-horror">筆文字ホラー</option>
-        <option value="font-hand-horror">手書きホラー</option>
+        <optgroup label="基本フォント">
+          <option value="font-mincho-horror">明朝ホラー（端末）</option>
+          <option value="font-retro-dot">レトロドット風（Google）</option>
+          <option value="font-bold-gothic">太字ゴシック（端末）</option>
+          <option value="font-brush-horror">筆文字ホラー（端末）</option>
+          <option value="font-hand-horror">手書きホラー（端末）</option>
+        </optgroup>
+        <optgroup label="日本語ホラー・レトロ風 Google Fonts">
+          <option value="font-yuji-syuku">怪談筆文字：Yuji Syuku</option>
+          <option value="font-new-tegomin">古文ホラー：New Tegomin</option>
+          <option value="font-hina-mincho">細明朝：Hina Mincho</option>
+          <option value="font-kaisei-decol">装飾明朝：Kaisei Decol</option>
+          <option value="font-zen-kurenaido">手書き：Zen Kurenaido</option>
+          <option value="font-reggae-one">レトロ太字：Reggae One</option>
+          <option value="font-dela-gothic">重厚ゴシック：Dela Gothic One</option>
+        </optgroup>
+        <optgroup label="英字ホラー Google Fonts（日本語は和文フォントで表示）">
+          <option value="font-creepster">英字ホラー：Creepster</option>
+          <option value="font-nosifer">英字ドリップ：Nosifer</option>
+          <option value="font-eater">英字怪物風：Eater</option>
+          <option value="font-butcherman">英字切り裂き風：Butcherman</option>
+          <option value="font-rubik-wet">英字ペイント：Rubik Wet Paint</option>
+        </optgroup>
       </select>
       <select id="songPicker" title="好きな曲を追加" hidden>
         <option value="">好きな曲を追加（4曲まで）</option>
         <option value="おともだち">おともだち</option>
         <option value="キミと××××したいだけ">キミと××××したいだけ</option>
         <option value="魔性少女">魔性少女</option>
-        <option value="ホラークイーン">ホラークイーン</option>
         <option value="花喰み">花喰み</option>
         <option value="乙女心中">乙女心中</option>
         <option value="ゾクゾク">ゾクゾク</option>
@@ -1192,13 +1314,10 @@
         <option value="薔薇色の月">薔薇色の月</option>
         <option value="もーいーかい？">もーいーかい？</option>
         <option value="輪廻る">輪廻る</option>
+	<option value="ホラークイーン">ホラークイーン</option>
       </select>
       <button type="button" id="removeLastSong" hidden>最後の曲を削除</button>
       <button type="button" id="clearSongs" hidden>曲を消す</button>
-      <button type="button" id="clearIcon">アイコンを消す</button>
-      <button type="button" id="resetIconTransform">アイコン位置リセット</button>
-      <button type="button" id="clearText">入力欄を空にする</button>
-      <button type="button" id="toggleMobileEditor">フォームから入力</button>
       <button type="button" id="savePng">保存</button>
     </div>
 
@@ -1256,6 +1375,10 @@
     <p class="creator-credit">画像作成者：X(Twitter)　कㄑ”‎ ^. .^ ੭（@uxwou_4）様</p>
     <p class="save-status" id="saveStatus" role="status" aria-live="polite"></p>
 
+    <div class="bottom-actions">
+      <button type="button" id="toggleMobileEditor">フォームから入力</button>
+    </div>
+
     <div class="mobile-editor" id="mobileEditor">
       <h2>フォーム入力欄</h2>
       <p class="mobile-note">カード上を直接タップして入力しづらい場合は、この大きい入力欄から編集できます。入力内容は上のカードに自動反映されます。</p>
@@ -1279,6 +1402,10 @@
         <div class="mobile-row mobile-full">
           <label for="mBirthday">誕生日</label>
           <input id="mBirthday" type="text" autocomplete="off" placeholder="例：5月28日">
+        </div>
+        <div class="mobile-row mobile-full">
+          <label for="mFontSelect">入力文字のフォント</label>
+          <select id="mFontSelect"></select>
         </div>
         <div class="mobile-row mobile-full">
           <label for="mOshi">推し</label>
@@ -1320,8 +1447,9 @@
 
 <script>
 (() => {
-  const STORAGE_KEY = "haine_profile_card_v22_device_positions_memo_fit";
-  const OLD_STORAGE_KEYS = ["haine_profile_card_v21_icon_contain_only", "haine_profile_card_v20_song_tap_select", "haine_profile_card_v19_device_profiles", "haine_profile_card_v18_direct_mobile_input", "haine_profile_card_v17_png_save", "haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
+  const STORAGE_KEY = "haine_profile_card_v25_google_horror_fonts";
+  const V24_OLD_STORAGE_KEY = "haine_profile_card_v24_bottom_form_font_note";
+  const OLD_STORAGE_KEYS = [V24_OLD_STORAGE_KEY, "haine_profile_card_v22_device_positions_memo_fit", "haine_profile_card_v21_icon_contain_only", "haine_profile_card_v20_song_tap_select", "haine_profile_card_v19_device_profiles", "haine_profile_card_v18_direct_mobile_input", "haine_profile_card_v17_png_save", "haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
   const ids = ["name", "callname", "age", "gender", "birthday", "favoritePoint", "freeSpace"];
   const birthday = document.getElementById("birthday");
   const autoFitInputIds = ["name", "callname", "age", "gender", "birthday"];
@@ -1344,7 +1472,12 @@
   const fontSelect = document.getElementById("fontSelect");
   const deviceSelect = document.getElementById("deviceSelect");
   const fontSizeSelect = document.getElementById("fontSizeSelect"); // v15では文字サイズ選択UIは削除し、特大固定
-  const fontClasses = ["font-mincho-horror", "font-retro-dot", "font-bold-gothic", "font-brush-horror", "font-hand-horror"];
+  const fontClasses = [
+    "font-mincho-horror", "font-retro-dot", "font-bold-gothic", "font-brush-horror", "font-hand-horror",
+    "font-yuji-syuku", "font-new-tegomin", "font-hina-mincho", "font-kaisei-decol", "font-zen-kurenaido",
+    "font-reggae-one", "font-dela-gothic",
+    "font-creepster", "font-nosifer", "font-eater", "font-butcherman", "font-rubik-wet"
+  ];
   const fontSizeClasses = ["font-size-small", "font-size-normal", "font-size-large", "font-size-xlarge"];
   const deviceProfiles = ["pc", "320x568", "375x667", "375x812", "390x844", "393x852", "402x874", "414x736", "414x896", "420x912", "428x926", "430x932", "440x956"];
   const deviceProfileClasses = deviceProfiles.map(profile => `profile-${profile}`);
@@ -1353,7 +1486,6 @@
     "おともだち",
     "キミと××××したいだけ",
     "魔性少女",
-    "ホラークイーン",
     "花喰み",
     "乙女心中",
     "ゾクゾク",
@@ -1364,7 +1496,8 @@
     "botばっか",
     "薔薇色の月",
     "もーいーかい？",
-    "輪廻る"
+    "輪廻る",
+    "ホラークイーン"
   ];
   let selectedSongs = [];
   const MAX_SONGS = 4;
@@ -1528,6 +1661,7 @@
       age: document.getElementById("mAge"),
       gender: document.getElementById("mGender"),
       birthday: document.getElementById("mBirthday"),
+      font: document.getElementById("mFontSelect"),
       oshi: document.getElementById("mOshi"),
       songPicker: document.getElementById("mSongPicker"),
       songListText: document.getElementById("mSongListText"),
@@ -1947,6 +2081,7 @@
     mobile.age.value = document.getElementById("age").value || "";
     mobile.gender.value = document.getElementById("gender").value || "";
     mobile.birthday.value = birthday.value || "";
+    if (mobile.font) mobile.font.value = fontSelect.value || "font-mincho-horror";
     mobile.oshi.value = oshiSelect.value || "";
     mobile.songPicker.value = "";
     mobile.favoritePoint.value = document.getElementById("favoritePoint").value || "";
@@ -1979,6 +2114,7 @@
     if (!mobile.name) return;
     cloneSelectOptions(oshiSelect, mobile.oshi);
     cloneSelectOptions(songPicker, mobile.songPicker);
+    cloneSelectOptions(fontSelect, mobile.font);
 
     const textMap = [
       ["name", mobile.name],
@@ -2000,6 +2136,15 @@
       });
     });
 
+    if (mobile.font) {
+      mobile.font.addEventListener("change", () => {
+        applyFontClass(mobile.font.value);
+        fitAllOneLineInputs();
+        fitAllMemoTextareas();
+        fitSongDisplay();
+        saveState();
+      });
+    }
     mobile.oshi.addEventListener("change", () => {
       setSelectedOshi(mobile.oshi.value);
       saveState();
@@ -2142,8 +2287,12 @@
   function applyFontClass(className) {
     const selected = fontClasses.includes(className) ? className : "font-mincho-horror";
     card.classList.remove(...fontClasses);
+    document.body.classList.remove(...fontClasses);
     card.classList.add(selected);
+    document.body.classList.add(selected);
     fontSelect.value = selected;
+    const mobile = getMobileControls();
+    if (mobile.font) mobile.font.value = selected;
   }
 
   function applyFontSizeClass() {
@@ -2380,8 +2529,10 @@
   fontSelect.addEventListener("change", () => {
     applyFontClass(fontSelect.value);
     fitAllOneLineInputs();
+    fitAllMemoTextareas();
     fitSongDisplay();
     saveState();
+    syncMobileFromCard();
   });
 
   if (deviceSelect) {
@@ -2403,30 +2554,39 @@
     saveState();
   });
 
-  document.getElementById("clearIcon").addEventListener("click", () => {
-    iconPreview.removeAttribute("src");
-    setIconVisible(false);
-    resetIconTransform(false);
-    fileInput.value = "";
-    saveState();
-  });
+  const clearIconButton = document.getElementById("clearIcon");
+  if (clearIconButton) {
+    clearIconButton.addEventListener("click", () => {
+      iconPreview.removeAttribute("src");
+      setIconVisible(false);
+      resetIconTransform(false);
+      fileInput.value = "";
+      saveState();
+    });
+  }
 
-  document.getElementById("resetIconTransform").addEventListener("click", () => {
-    if (!hasIconImage()) return;
-    resetIconTransform(true);
-  });
+  const resetIconButton = document.getElementById("resetIconTransform");
+  if (resetIconButton) {
+    resetIconButton.addEventListener("click", () => {
+      if (!hasIconImage()) return;
+      resetIconTransform(true);
+    });
+  }
 
-  document.getElementById("clearText").addEventListener("click", () => {
-    if (!confirm("入力欄をすべて空にします。よろしいですか？")) return;
-    ids.forEach(id => document.getElementById(id).value = "");
-    setSelectedOshi([]);
-    selectedSongs = [];
-    renderSongs();
-    fitAllOneLineInputs();
-    fitAllMemoTextareas();
-    saveState();
-    syncMobileFromCard();
-  });
+  const clearTextButton = document.getElementById("clearText");
+  if (clearTextButton) {
+    clearTextButton.addEventListener("click", () => {
+      if (!confirm("入力欄をすべて空にします。よろしいですか？")) return;
+      ids.forEach(id => document.getElementById(id).value = "");
+      setSelectedOshi([]);
+      selectedSongs = [];
+      renderSongs();
+      fitAllOneLineInputs();
+      fitAllMemoTextareas();
+      saveState();
+      syncMobileFromCard();
+    });
+  }
 
   const toggleMobileEditorButton = document.getElementById("toggleMobileEditor");
   if (toggleMobileEditorButton) toggleMobileEditorButton.addEventListener("click", toggleMobileEditorPanel);
@@ -2442,6 +2602,13 @@
   setupMobileEditor();
   setupIconAdjuster();
   loadState();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      fitAllOneLineInputs();
+      fitAllMemoTextareas();
+      fitSongDisplay();
+    }).catch(() => {});
+  }
 })();
 </script>
 </body>
