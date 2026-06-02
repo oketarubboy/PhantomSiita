@@ -54,7 +54,7 @@
   }
   .card {
     position: relative;
-    width: min(100%, 768px);
+    width: min(100%, var(--card-max-width, 768px));
     aspect-ratio: var(--card-ratio);
     margin: 0 auto;
     --entry-font: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", "Yu Gothic", "Meiryo", serif;
@@ -111,10 +111,8 @@
     padding-right: .2%;
   }
   /* 年齢・性別は短い文字が多いため、必要以上に小さくならないようにする */
-  #age,
-  #gender {
-    min-width: 14.5%;
-  }
+  #age { min-width: var(--age-width, 14.5%); }
+  #gender { min-width: var(--gender-width, 14.5%); }
   .field::placeholder,
   .memo::placeholder {
     color: rgba(255,255,255,.45);
@@ -124,8 +122,11 @@
     padding: 0 .7%;
     font-size: var(--memo-font-size);
     line-height: 1.55;
-    overflow: auto;
-    scrollbar-width: thin;
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+  .memo::-webkit-scrollbar {
+    display: none;
   }
   .select-field {
     position: absolute;
@@ -168,7 +169,7 @@
     width: 100%;
     height: 100%;
     display: none;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center center;
     background: #000;
     transform-origin: center center;
@@ -260,11 +261,410 @@
     --oshi-size-1: clamp(23px, 4.05cqw, 43px);
     --oshi-size-2: clamp(18px, 3.15cqw, 33px);
     --oshi-size-3: clamp(15px, 2.65cqw, 28px);
+    --oshi-size-box: clamp(11px, 1.78cqw, 20px);
+    --song-size-1: clamp(20px, 3.35cqw, 36px);
+    --song-size-2: clamp(15px, 2.45cqw, 26px);
+    --song-size-3: clamp(13px, 2.15cqw, 23px);
+    --song-size-4: clamp(11px, 1.78cqw, 20px);
+  }
+
+
+  /* ============================================================
+     端末別調整設定：PC版 + スマホCSSピクセル12種類
+     文字サイズ、入力位置、表示可能な最大幅はここで調整できます。
+     - 文字サイズ：--field-font-size / --memo-font-size / --oshi-size-* / --song-size-*
+     - 位置：--name-left / --name-top など
+     - 最大幅：--name-width / --song-width など
+     ============================================================ */
+  .card.profile-pc {
+    /* PC版 */
+    --card-max-width: 768px;
+    --mobile-card-width: calc(100vw - 12px);
+    --field-font-size: clamp(21px, 3.75cqw, 40px);
+    --memo-font-size: clamp(18px, 3.25cqw, 34px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(16px, 2.95cqw, 31px);
+    --oshi-size-1: clamp(23px, 4.05cqw, 43px);
+    --oshi-size-2: clamp(18px, 3.15cqw, 33px);
     --oshi-size-box: clamp(16px, 2.75cqw, 29px);
     --song-size-1: clamp(20px, 3.35cqw, 36px);
     --song-size-2: clamp(15px, 2.45cqw, 26px);
     --song-size-3: clamp(13px, 2.15cqw, 23px);
     --song-size-4: clamp(11px, 1.78cqw, 20px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 15.0%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 15.6%; --oshibox-top: 55.92%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 54.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 53.45%; --song4-top: 53.45%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-320x568 {
+    /* スマホ 320×568 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(13px, 4.10cqw, 26px);
+    --memo-font-size: clamp(11px, 3.20cqw, 20px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(12px, 3.45cqw, 22px);
+    --oshi-size-1: clamp(14px, 4.35cqw, 28px);
+    --oshi-size-2: clamp(12px, 3.50cqw, 23px);
+    --oshi-size-box: clamp(10px, 2.10cqw, 20px);
+    --song-size-1: clamp(13px, 3.80cqw, 24px);
+    --song-size-2: clamp(11px, 3.05cqw, 19px);
+    --song-size-3: clamp(10px, 2.65cqw, 17px);
+    --song-size-4: clamp(9px, 2.35cqw, 15px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-375x667 {
+    /* スマホ 375×667 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(15px, 4.05cqw, 29px);
+    --memo-font-size: clamp(12px, 3.15cqw, 22px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(13px, 3.40cqw, 24px);
+    --oshi-size-1: clamp(16px, 4.25cqw, 31px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 25px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 22px);
+    --song-size-1: clamp(15px, 3.70cqw, 27px);
+    --song-size-2: clamp(12px, 2.95cqw, 21px);
+    --song-size-3: clamp(11px, 2.55cqw, 18px);
+    --song-size-4: clamp(10px, 2.20cqw, 16px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-375x812 {
+    /* スマホ 375×812 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(15px, 4.05cqw, 29px);
+    --memo-font-size: clamp(12px, 3.15cqw, 22px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(13px, 3.40cqw, 24px);
+    --oshi-size-1: clamp(16px, 4.25cqw, 31px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 25px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 22px);
+    --song-size-1: clamp(15px, 3.70cqw, 27px);
+    --song-size-2: clamp(12px, 2.95cqw, 21px);
+    --song-size-3: clamp(11px, 2.55cqw, 18px);
+    --song-size-4: clamp(10px, 2.20cqw, 16px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-390x844 {
+    /* スマホ 390×844 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(16px, 4.05cqw, 30px);
+    --memo-font-size: clamp(13px, 3.15cqw, 23px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(14px, 3.40cqw, 25px);
+    --oshi-size-1: clamp(17px, 4.25cqw, 32px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 26px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 23px);
+    --song-size-1: clamp(16px, 3.70cqw, 28px);
+    --song-size-2: clamp(13px, 2.95cqw, 22px);
+    --song-size-3: clamp(11px, 2.55cqw, 19px);
+    --song-size-4: clamp(10px, 2.20cqw, 17px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-393x852 {
+    /* スマホ 393×852 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(16px, 4.05cqw, 30px);
+    --memo-font-size: clamp(13px, 3.15cqw, 23px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(14px, 3.40cqw, 25px);
+    --oshi-size-1: clamp(17px, 4.25cqw, 32px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 26px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 23px);
+    --song-size-1: clamp(16px, 3.70cqw, 28px);
+    --song-size-2: clamp(13px, 2.95cqw, 22px);
+    --song-size-3: clamp(11px, 2.55cqw, 19px);
+    --song-size-4: clamp(10px, 2.20cqw, 17px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-402x874 {
+    /* スマホ 402×874 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(16px, 4.10cqw, 31px);
+    --memo-font-size: clamp(13px, 3.20cqw, 24px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(14px, 3.45cqw, 26px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 33px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 27px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 24px);
+    --song-size-1: clamp(16px, 3.75cqw, 29px);
+    --song-size-2: clamp(13px, 3.00cqw, 23px);
+    --song-size-3: clamp(12px, 2.60cqw, 20px);
+    --song-size-4: clamp(10px, 2.25cqw, 18px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-414x736 {
+    /* スマホ 414×736 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(16px, 4.10cqw, 31px);
+    --memo-font-size: clamp(13px, 3.20cqw, 24px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(14px, 3.45cqw, 26px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 33px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 27px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 24px);
+    --song-size-1: clamp(16px, 3.75cqw, 29px);
+    --song-size-2: clamp(13px, 3.00cqw, 23px);
+    --song-size-3: clamp(12px, 2.60cqw, 20px);
+    --song-size-4: clamp(10px, 2.25cqw, 18px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-414x896 {
+    /* スマホ 414×896 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(16px, 4.10cqw, 31px);
+    --memo-font-size: clamp(13px, 3.20cqw, 24px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(14px, 3.45cqw, 26px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 33px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 27px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 24px);
+    --song-size-1: clamp(16px, 3.75cqw, 29px);
+    --song-size-2: clamp(13px, 3.00cqw, 23px);
+    --song-size-3: clamp(12px, 2.60cqw, 20px);
+    --song-size-4: clamp(10px, 2.25cqw, 18px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-420x912 {
+    /* スマホ 420×912 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(17px, 4.10cqw, 32px);
+    --memo-font-size: clamp(14px, 3.20cqw, 25px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(15px, 3.45cqw, 27px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 34px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 28px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 25px);
+    --song-size-1: clamp(17px, 3.75cqw, 30px);
+    --song-size-2: clamp(13px, 3.00cqw, 24px);
+    --song-size-3: clamp(12px, 2.60cqw, 21px);
+    --song-size-4: clamp(11px, 2.25cqw, 19px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-428x926 {
+    /* スマホ 428×926 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(17px, 4.10cqw, 32px);
+    --memo-font-size: clamp(14px, 3.20cqw, 25px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(15px, 3.45cqw, 27px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 34px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 28px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 25px);
+    --song-size-1: clamp(17px, 3.75cqw, 30px);
+    --song-size-2: clamp(13px, 3.00cqw, 24px);
+    --song-size-3: clamp(12px, 2.60cqw, 21px);
+    --song-size-4: clamp(11px, 2.25cqw, 19px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-430x932 {
+    /* スマホ 430×932 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(17px, 4.10cqw, 32px);
+    --memo-font-size: clamp(14px, 3.20cqw, 25px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(15px, 3.45cqw, 27px);
+    --oshi-size-1: clamp(18px, 4.25cqw, 34px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 28px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 25px);
+    --song-size-1: clamp(17px, 3.75cqw, 30px);
+    --song-size-2: clamp(13px, 3.00cqw, 24px);
+    --song-size-3: clamp(12px, 2.60cqw, 21px);
+    --song-size-4: clamp(11px, 2.25cqw, 19px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
+  }
+  .card.profile-440x956 {
+    /* スマホ 440×956 */
+    --card-max-width: none;
+    --mobile-card-width: calc(100vw - 2px);
+    --field-font-size: clamp(18px, 4.10cqw, 33px);
+    --memo-font-size: clamp(14px, 3.20cqw, 26px);
+    --memo-min-font-size: 6px;
+    --oshi-font-size: clamp(15px, 3.45cqw, 28px);
+    --oshi-size-1: clamp(19px, 4.25cqw, 35px);
+    --oshi-size-2: clamp(13px, 3.45cqw, 29px);
+    --oshi-size-box: clamp(10px, 3.05cqw, 26px);
+    --song-size-1: clamp(18px, 3.75cqw, 31px);
+    --song-size-2: clamp(14px, 3.00cqw, 25px);
+    --song-size-3: clamp(12px, 2.60cqw, 22px);
+    --song-size-4: clamp(11px, 2.25cqw, 20px);
+    --name-left: 62.2%; --name-top: 17.55%; --name-width: 25.3%;
+    --callname-left: 66.0%; --callname-top: 27.72%; --callname-width: 23.0%;
+    --age-left: 17.0%; --age-top: 41.95%; --age-width: 14.5%;
+    --gender-left: 47.2%; --gender-top: 41.95%; --gender-width: 14.5%;
+    --birthday-left: 74.5%; --birthday-top: 41.95%; --birthday-width: 21.5%;
+    --oshi-left: 16.3%; --oshi-top: 55.45%; --oshi-width: 31.5%; --oshi-height: 5.2%;
+    --oshi-display-left: 16.3%; --oshi-display-top: 56.10%; --oshi-display-width: 31.5%; --oshi-display-height: 3.5%;
+    --oshi1-left: 19.3%; --oshi1-top: 55.86%; --oshi1-width: 21.6%; --oshi1-height: 3.8%;
+    --oshi2-left: 13.5%; --oshi2-top: 55.98%; --oshi2-width: 30.6%; --oshi2-height: 3.8%;
+    --oshibox-left: 13.5%; --oshibox-top: 55.50%; --oshibox-width: 32.4%; --oshibox-height: 4.0%;
+    --song-left: 48.8%; --song-top: 53.20%; --song-width: 46.8%; --song-height: 7.70%;
+    --song3-top: 52.85%; --song4-top: 52.85%;
+    --favorite-left: 6.8%; --favorite-top: 67.3%; --favorite-width: 43.8%; --favorite-height: 30.0%;
+    --free-left: 59.0%; --free-top: 67.3%; --free-width: 34.2%; --free-height: 30.0%;
   }
 
   /* フォント選択：PCに入っているフォントが優先して使われます */
@@ -339,6 +739,18 @@
     text-align: center;
     line-height: 1;
   }
+  /* 好きな曲はカード上の表示欄をタップして選択 */
+  .song-display {
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 8;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .song-display:focus-visible {
+    outline: 2px solid rgba(255,255,255,.75);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
   /* 好きな曲：1曲は中央、2曲は詰めて横並び、3曲は上段1曲＋下段2曲、4曲は2×2 */
   .song-display.song-count-0,
   .song-display.song-count-1 {
@@ -372,39 +784,39 @@
   }
 
 
-  /* 1536px × 2048px の元画像に対する位置指定 */
-  /* 入力文字は、背景に描かれているアンダーバーの少し上に重なるように調整 */
-  #name       { left: 62.2%; top: 17.55%; width: 25.3%; }
-  #callname   { left: 66.0%; top: 27.72%; width: 23.0%; }
-  #age        { left: 17.0%; top: 41.95%; width: 14.5%; }
-  #gender     { left: 47.2%; top: 41.95%; width: 14.5%; }
-  #birthday   { left: 74.5%; top: 41.95%; width: 21.5%; }
-  #oshi       { left: 16.3%; top: 55.45%; width: 31.5%; height: 5.2%; }
-  #oshiDisplay { left: 16.3%; top: 56.10%; width: 31.5%; height: 3.5%; }
-  #oshiDisplay.oshi-count-1 { left: 19.3%; top: 55.86%; width: 21.6%; height: 3.8%; font-size: var(--oshi-size-1); justify-content: flex-start; }
-  #oshiDisplay.oshi-count-2 { left: 15.0%; top: 55.98%; width: 30.6%; height: 3.8%; font-size: var(--oshi-size-2); justify-content: flex-start; }
-  #oshiDisplay.oshi-count-box { left: 15.6%; top: 55.92%; width: 32.4%; height: 4.0%; font-size: var(--oshi-size-box); justify-content: flex-start; }
-  #oshiDisplay.oshi-count-0 { left: 16.3%; top: 56.10%; width: 31.5%; height: 3.5%; font-size: var(--oshi-font-size); }
+  /* 1536px × 2048px の元画像に対する位置指定
+     実際の値は上の「端末別調整設定」のCSS変数から反映します。 */
+  #name       { left: var(--name-left); top: var(--name-top); width: var(--name-width); }
+  #callname   { left: var(--callname-left); top: var(--callname-top); width: var(--callname-width); }
+  #age        { left: var(--age-left); top: var(--age-top); width: var(--age-width); min-width: var(--age-width); }
+  #gender     { left: var(--gender-left); top: var(--gender-top); width: var(--gender-width); min-width: var(--gender-width); }
+  #birthday   { left: var(--birthday-left); top: var(--birthday-top); width: var(--birthday-width); }
+  #oshi       { left: var(--oshi-left); top: var(--oshi-top); width: var(--oshi-width); height: var(--oshi-height); }
+  #oshiDisplay { left: var(--oshi-display-left); top: var(--oshi-display-top); width: var(--oshi-display-width); height: var(--oshi-display-height); }
+  #oshiDisplay.oshi-count-1 { left: var(--oshi1-left); top: var(--oshi1-top); width: var(--oshi1-width); height: var(--oshi1-height); font-size: var(--oshi-size-1); justify-content: flex-start; }
+  #oshiDisplay.oshi-count-2 { left: var(--oshi2-left); top: var(--oshi2-top); width: var(--oshi2-width); height: var(--oshi2-height); font-size: var(--oshi-size-2); justify-content: flex-start; }
+  #oshiDisplay.oshi-count-box { left: var(--oshibox-left); top: var(--oshibox-top); width: var(--oshibox-width); height: var(--oshibox-height); font-size: var(--oshi-size-box); justify-content: flex-start; }
+  #oshiDisplay.oshi-count-0 { left: var(--oshi-display-left); top: var(--oshi-display-top); width: var(--oshi-display-width); height: var(--oshi-display-height); font-size: var(--oshi-font-size); }
 
-  /* 好きな曲の位置・サイズ調整：topを小さくすると上、font-size変数を大きくすると文字が大きくなります */
-  #songDisplay { left: 48.8%; top: 54.20%; width: 46.8%; height: 7.70%; font-size: var(--song-size-1); }
-  #songDisplay.song-count-0 { top: 54.20%; height: 7.70%; font-size: var(--song-size-1); }
-  #songDisplay.song-count-1 { top: 54.20%; height: 7.70%; font-size: var(--song-size-1); }
-  #songDisplay.song-count-2 { top: 54.20%; height: 7.70%; font-size: var(--song-size-2); line-height: 1; }
-  #songDisplay.song-count-3 { top: 53.45%; height: 7.70%; font-size: var(--song-size-3); line-height: 1; }
-  #songDisplay.song-count-4 { top: 53.45%; height: 7.70%; font-size: var(--song-size-4); line-height: 1; }
-  #songDisplay.song-count-many { top: 53.45%; height: 7.70%; font-size: var(--song-size-4); line-height: 1; }
+  /* 好きな曲の位置・サイズ調整 */
+  #songDisplay { left: var(--song-left); top: var(--song-top); width: var(--song-width); height: var(--song-height); font-size: var(--song-size-1); }
+  #songDisplay.song-count-0 { top: var(--song-top); height: var(--song-height); font-size: var(--song-size-1); }
+  #songDisplay.song-count-1 { top: var(--song-top); height: var(--song-height); font-size: var(--song-size-1); }
+  #songDisplay.song-count-2 { top: var(--song-top); height: var(--song-height); font-size: var(--song-size-2); line-height: 1; }
+  #songDisplay.song-count-3 { top: var(--song3-top); height: var(--song-height); font-size: var(--song-size-3); line-height: 1; }
+  #songDisplay.song-count-4 { top: var(--song4-top); height: var(--song-height); font-size: var(--song-size-4); line-height: 1; }
+  #songDisplay.song-count-many { top: var(--song4-top); height: var(--song-height); font-size: var(--song-size-4); line-height: 1; }
 
-  /* 推しの好きなところ・フリースペース：開始位置を約0.5文字分上げ、下方向に約2行分拡張 */
-  #favoritePoint { left: 6.8%; top: 67.3%; width: 43.8%; height: 30.0%; }
-  #freeSpace     { left: 59.0%; top: 67.3%; width: 34.2%; height: 30.0%; }
+  /* 推しの好きなところ・フリースペース */
+  #favoritePoint { left: var(--favorite-left); top: var(--favorite-top); width: var(--favorite-width); height: var(--favorite-height); }
+  #freeSpace     { left: var(--free-left); top: var(--free-top); width: var(--free-width); height: var(--free-height); }
 
 
 
   /* スマホ用：カード上の小さい入力欄を直接タップしなくても編集できるようにする */
   .mobile-editor {
     display: none;
-    width: min(100%, 768px);
+    width: min(100%, var(--card-max-width, 768px));
     margin: 14px auto 0;
     padding: 14px;
     border: 1px solid rgba(255,255,255,.16);
@@ -529,8 +941,8 @@
       flex: 0 0 auto;
     }
     .card {
-      width: min(100%, calc(100vw - 12px));
-      max-width: 768px;
+      width: var(--mobile-card-width, calc(100vw - 12px));
+      max-width: var(--card-max-width, 768px);
       box-shadow: 0 8px 26px rgba(0,0,0,.45);
     }
     /* スマホでもカード上の「名前：」などの横を直接タップして入力できるようにする */
@@ -559,7 +971,7 @@
 
 
   .creator-credit {
-    width: min(100%, 768px);
+    width: min(100%, var(--card-max-width, 768px));
     margin: 8px auto 0;
     color: #d7d7d7;
     font-size: 12px;
@@ -590,17 +1002,172 @@
       print-color-adjust: exact;
     }
   }
+
+  /* 好きな曲タップ選択モーダル */
+  .song-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0,0,0,.68);
+  }
+  .song-modal.is-open {
+    display: flex;
+  }
+  body.modal-open {
+    overflow: hidden;
+  }
+  .song-modal-panel {
+    width: min(560px, 100%);
+    max-height: min(86vh, 720px);
+    overflow: auto;
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 18px;
+    background: #151515;
+    color: #fff;
+    box-shadow: 0 18px 56px rgba(0,0,0,.58);
+    padding: 16px;
+  }
+  .song-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .song-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .song-modal-note {
+    margin: 4px 0 0;
+    color: #d8d8d8;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .song-option-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .song-option-button {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 12px;
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    font: 600 14px/1.35 "Yu Gothic", "Meiryo", sans-serif;
+    text-align: left;
+    cursor: pointer;
+  }
+  .song-option-button .checkmark {
+    width: 1.25em;
+    min-width: 1.25em;
+    color: #ffb6cf;
+    font-weight: 900;
+    text-align: center;
+  }
+  .song-option-button.is-selected {
+    border-color: rgba(255,182,207,.72);
+    background: rgba(255,182,207,.18);
+  }
+  .song-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .song-modal-actions button,
+  .song-modal-close {
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 10px;
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .song-modal-close {
+    min-width: 42px;
+  }
+  @media (max-width: 700px) {
+    .song-modal {
+      align-items: flex-end;
+      padding: 10px;
+    }
+    .song-modal-panel {
+      max-height: 78vh;
+      border-radius: 18px 18px 12px 12px;
+      padding: 14px;
+    }
+    .song-option-list {
+      grid-template-columns: 1fr;
+    }
+    .song-option-button {
+      min-height: 46px;
+      font-size: 15px;
+    }
+  }
+
 </style>
 </head>
 <body>
   <div class="app">
     <div class="toolbar">
+      <select id="deviceSelect" title="表示機種">
+        <option value="pc" data-profile="pc">PC版</option>
+        <option value="iphone-se" data-profile="320x568">iPhone SE（320×568）</option>
+        <option value="iphone-7" data-profile="375x667">iPhone 7（375×667）</option>
+        <option value="iphone-7-plus" data-profile="414x736">iPhone 7 Plus（414×736）</option>
+        <option value="iphone-8" data-profile="375x667">iPhone 8（375×667）</option>
+        <option value="iphone-8-plus" data-profile="414x736">iPhone 8 Plus（414×736）</option>
+        <option value="iphone-x" data-profile="375x812">iPhone X（375×812）</option>
+        <option value="iphone-xs" data-profile="375x812">iPhone XS（375×812）</option>
+        <option value="iphone-xs-max" data-profile="414x896">iPhone XS MAX（414×896）</option>
+        <option value="iphone-xr" data-profile="414x896">iPhone XR（414×896）</option>
+        <option value="iphone-11" data-profile="414x896">iPhone 11（414×896）</option>
+        <option value="iphone-11-pro" data-profile="375x812">iPhone 11 Pro（375×812）</option>
+        <option value="iphone-11-pro-max" data-profile="414x896">iPhone 11 Pro MAX（414×896）</option>
+        <option value="iphone-se2" data-profile="375x667">iPhone SE2（375×667）</option>
+        <option value="iphone-12-mini" data-profile="375x812">iPhone 12 mini（375×812）</option>
+        <option value="iphone-12" data-profile="390x844">iPhone 12（390×844）</option>
+        <option value="iphone-12-pro" data-profile="390x844">iPhone 12 Pro（390×844）</option>
+        <option value="iphone-12-pro-max" data-profile="428x926">iPhone 12 Pro MAX（428×926）</option>
+        <option value="iphone-13-mini" data-profile="375x812">iPhone 13 mini（375×812）</option>
+        <option value="iphone-13" data-profile="390x844">iPhone 13（390×844）</option>
+        <option value="iphone-13-pro" data-profile="390x844">iPhone 13 Pro（390×844）</option>
+        <option value="iphone-13-pro-max" data-profile="428x926">iPhone 13 Pro MAX（428×926）</option>
+        <option value="iphone-se3" data-profile="375x667">iPhone SE3（375×667）</option>
+        <option value="iphone-14" data-profile="390x844">iPhone 14（390×844）</option>
+        <option value="iphone-14-plus" data-profile="428x926">iPhone 14 Plus（428×926）</option>
+        <option value="iphone-14-pro" data-profile="390x844">iPhone 14 Pro（390×844）</option>
+        <option value="iphone-14-pro-max" data-profile="430x932">iPhone 14 Pro MAX（430×932）</option>
+        <option value="iphone-15" data-profile="393x852">iPhone 15（393×852）</option>
+        <option value="iphone-15-plus" data-profile="430x932">iPhone 15 Plus（430×932）</option>
+        <option value="iphone-15-pro" data-profile="393x852">iPhone 15 Pro（393×852）</option>
+        <option value="iphone-15-pro-max" data-profile="430x932">iPhone 15 Pro MAX（430×932）</option>
+        <option value="iphone-16" data-profile="393x852">iPhone 16（393×852）</option>
+        <option value="iphone-16-plus" data-profile="430x932">iPhone 16 Plus（430×932）</option>
+        <option value="iphone-16-pro" data-profile="402x874">iPhone 16 Pro（402×874）</option>
+        <option value="iphone-16-pro-max" data-profile="440x956">iPhone 16 Pro MAX（440×956）</option>
+        <option value="iphone-17" data-profile="402x874">iPhone 17（402×874）</option>
+        <option value="iphone-17-air" data-profile="420x912">iPhone 17 Air（420×912）</option>
+        <option value="iphone-17-pro" data-profile="402x874">iPhone 17 Pro（402×874）</option>
+        <option value="iphone-17-pro-max" data-profile="440x956">iPhone 17 Pro MAX（440×956）</option>
+      </select>
       <label class="file-button" for="fileInput">アイコン画像を選択</label>
       <input id="fileInput" type="file" accept="image/*">
-      <select id="fitMode" title="アイコン画像の表示方法">
-        <option value="cover">画像を枠いっぱいに表示</option>
-        <option value="contain">画像全体を表示</option>
-      </select>
       <select id="fontSelect" title="入力文字のフォント">
         <option value="font-mincho-horror">明朝ホラー</option>
         <option value="font-retro-dot">レトロドット風</option>
@@ -608,11 +1175,12 @@
         <option value="font-brush-horror">筆文字ホラー</option>
         <option value="font-hand-horror">手書きホラー</option>
       </select>
-      <select id="songPicker" title="好きな曲を追加">
+      <select id="songPicker" title="好きな曲を追加" hidden>
         <option value="">好きな曲を追加（4曲まで）</option>
         <option value="おともだち">おともだち</option>
         <option value="キミと××××したいだけ">キミと××××したいだけ</option>
         <option value="魔性少女">魔性少女</option>
+        <option value="ホラークイーン">ホラークイーン</option>
         <option value="花喰み">花喰み</option>
         <option value="乙女心中">乙女心中</option>
         <option value="ゾクゾク">ゾクゾク</option>
@@ -625,8 +1193,8 @@
         <option value="もーいーかい？">もーいーかい？</option>
         <option value="輪廻る">輪廻る</option>
       </select>
-      <button type="button" id="removeLastSong">最後の曲を削除</button>
-      <button type="button" id="clearSongs">曲を消す</button>
+      <button type="button" id="removeLastSong" hidden>最後の曲を削除</button>
+      <button type="button" id="clearSongs" hidden>曲を消す</button>
       <button type="button" id="clearIcon">アイコンを消す</button>
       <button type="button" id="resetIconTransform">アイコン位置リセット</button>
       <button type="button" id="clearText">入力欄を空にする</button>
@@ -634,7 +1202,7 @@
       <button type="button" id="savePng">保存</button>
     </div>
 
-    <div class="card font-mincho-horror font-size-xlarge" id="card">
+    <div class="card font-mincho-horror font-size-xlarge profile-pc" id="card">
       <div id="iconBox" class="icon-box" title="画像をドラッグで移動、ピンチまたはホイールで拡大縮小">
         <img id="iconPreview" class="icon-preview" alt="アイコン画像" draggable="false">
         <label class="icon-hit" for="fileInput" title="クリックして画像を選択"></label>
@@ -653,21 +1221,39 @@
         <option value="美雨">美雨🤍</option>
         <option value="凛花">凛花💜</option>
         <option value="百花">百花🩵</option>
-        <option value="もな、美雨">もな🩷・美雨🤍</option>
-        <option value="もな、凛花">もな🩷・凛花💜</option>
-        <option value="もな、百花">もな🩷・百花🩵</option>
-        <option value="美雨、凛花">美雨🤍・凛花💜</option>
-        <option value="美雨、百花">美雨🤍・百花🩵</option>
-        <option value="凛花、百花">凛花💜・百花🩵</option>
+        <option value="もな、美雨">もな🩷 美雨🤍</option>
+        <option value="もな、凛花">もな🩷 凛花💜</option>
+        <option value="もな、百花">もな🩷 百花🩵</option>
+        <option value="美雨、凛花">美雨🤍 凛花💜</option>
+        <option value="美雨、百花">美雨🤍 百花🩵</option>
+        <option value="凛花、百花">凛花💜 百花🩵</option>
         <option value="箱推し">箱推し🩷🤍💜🩵</option>
       </select>
-      <div id="songDisplay" class="song-display song-count-0" aria-label="好きな曲"></div>
+      <div id="songDisplay" class="song-display song-count-0" aria-label="好きな曲を選択" role="button" tabindex="0" title="タップして好きな曲を選択"></div>
 
       <textarea id="favoritePoint" class="memo" placeholder=""></textarea>
       <textarea id="freeSpace" class="memo" placeholder=""></textarea>
     </div>
 
-    <p class="creator-credit">画像作成者：Twitter / X　कㄑ”‎ ^. .^ ੭（@uxwou_4）様</p>
+    <div class="song-modal" id="songModal" role="dialog" aria-modal="true" aria-labelledby="songModalTitle">
+      <div class="song-modal-panel">
+        <div class="song-modal-header">
+          <div>
+            <h2 id="songModalTitle">好きな曲を選択</h2>
+            <p class="song-modal-note">最大4曲まで選択できます。選択中の曲にはチェックマークが付き、もう一度タップすると外れます。</p>
+          </div>
+          <button type="button" class="song-modal-close" id="closeSongModal" aria-label="閉じる">×</button>
+        </div>
+        <div id="songOptionList" class="song-option-list"></div>
+        <div class="song-modal-actions">
+          <button type="button" id="clearSongsInModal">曲をすべて外す</button>
+          <button type="button" id="doneSongModal">決定</button>
+        </div>
+      </div>
+    </div>
+
+
+    <p class="creator-credit">画像作成者：X(Twitter)　कㄑ”‎ ^. .^ ੭（@uxwou_4）様</p>
     <p class="save-status" id="saveStatus" role="status" aria-live="polite"></p>
 
     <div class="mobile-editor" id="mobileEditor">
@@ -700,7 +1286,8 @@
         </div>
         <div class="mobile-row mobile-full">
           <label for="mSongPicker">好きな曲</label>
-          <select id="mSongPicker"></select>
+          <select id="mSongPicker" hidden></select>
+          <button type="button" id="mOpenSongModal">曲を選択する</button>
           <div class="mobile-actions">
             <button type="button" id="mRemoveLastSong">最後の曲を削除</button>
             <button type="button" id="mClearSongs">曲を消す</button>
@@ -726,37 +1313,47 @@
 
     <p class="hint">
       スマホでもカード上の入力欄を直接タップして編集できます。入力しづらい場合は「フォームから入力」を使ってください。<br>
-      入力内容・推し選択・好きな曲（最大4曲）・アイコン画像・アイコンの拡大率と位置はこのブラウザに自動保存されます。<br>
-      アイコン画像はドラッグで位置調整、スマホのピンチまたはPCのマウスホイールで拡大縮小できます。完成後は「保存」ボタンでPNG形式の画像として保存できます。
+      入力内容・推し選択・好きな曲（最大4曲）・アイコン画像・アイコンの拡大率と位置はこのブラウザに自動保存されます。好きな曲はカード上の「好きな曲」表示欄をタップして選択します。<br>
+      上部の「表示機種」で端末別の文字サイズ・位置設定を切り替えできます。アイコン画像はドラッグで位置調整、スマホのピンチまたはPCのマウスホイールで拡大縮小できます。完成後は「保存」ボタンでPNG形式の画像として保存できます。
     </p>
   </div>
 
 <script>
 (() => {
-  const STORAGE_KEY = "haine_profile_card_v18_direct_mobile_input";
-  const OLD_STORAGE_KEYS = ["haine_profile_card_v17_png_save", "haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
+  const STORAGE_KEY = "haine_profile_card_v22_device_positions_memo_fit";
+  const OLD_STORAGE_KEYS = ["haine_profile_card_v21_icon_contain_only", "haine_profile_card_v20_song_tap_select", "haine_profile_card_v19_device_profiles", "haine_profile_card_v18_direct_mobile_input", "haine_profile_card_v17_png_save", "haine_profile_card_v16_icon_pinch_adjust", "haine_profile_card_v15_font_xlarge_fixed", "haine_profile_card_v14_song_position_size", "haine_profile_card_v13_age_gender_fixed", "haine_profile_card_v12_song_spacing", "haine_profile_card_v11_song_2rows", "haine_profile_card_v8_center_fit", "haine_profile_card_v7_mobile", "haine_profile_card_v6", "haine_profile_card_v5", "haine_profile_card_v2"];
   const ids = ["name", "callname", "age", "gender", "birthday", "favoritePoint", "freeSpace"];
   const birthday = document.getElementById("birthday");
   const autoFitInputIds = ["name", "callname", "age", "gender", "birthday"];
+  const autoFitMemoIds = ["favoritePoint", "freeSpace"];
   const oshiSelect = document.getElementById("oshi");
   const oshiDisplay = document.getElementById("oshiDisplay");
   const songDisplay = document.getElementById("songDisplay");
   const songPicker = document.getElementById("songPicker");
+  const songModal = document.getElementById("songModal");
+  const songOptionList = document.getElementById("songOptionList");
+  const closeSongModal = document.getElementById("closeSongModal");
+  const doneSongModal = document.getElementById("doneSongModal");
+  const clearSongsInModal = document.getElementById("clearSongsInModal");
   const fileInput = document.getElementById("fileInput");
   const iconBox = document.getElementById("iconBox");
   const iconPreview = document.getElementById("iconPreview");
-  const fitMode = document.getElementById("fitMode");
+  const ICON_FIT_MODE = "contain"; // アイコン画像は常に画像全体を表示
   const card = document.getElementById("card");
   const saveStatus = document.getElementById("saveStatus");
   const fontSelect = document.getElementById("fontSelect");
+  const deviceSelect = document.getElementById("deviceSelect");
   const fontSizeSelect = document.getElementById("fontSizeSelect"); // v15では文字サイズ選択UIは削除し、特大固定
   const fontClasses = ["font-mincho-horror", "font-retro-dot", "font-bold-gothic", "font-brush-horror", "font-hand-horror"];
   const fontSizeClasses = ["font-size-small", "font-size-normal", "font-size-large", "font-size-xlarge"];
+  const deviceProfiles = ["pc", "320x568", "375x667", "375x812", "390x844", "393x852", "402x874", "414x736", "414x896", "420x912", "428x926", "430x932", "440x956"];
+  const deviceProfileClasses = deviceProfiles.map(profile => `profile-${profile}`);
   const memberOrder = ["もな", "美雨", "凛花", "百花"];
   const songList = [
     "おともだち",
     "キミと××××したいだけ",
     "魔性少女",
+    "ホラークイーン",
     "花喰み",
     "乙女心中",
     "ゾクゾク",
@@ -812,6 +1409,7 @@
   }
 
   function setIconVisible(visible) {
+    iconPreview.style.objectFit = ICON_FIT_MODE;
     iconPreview.style.display = visible ? "block" : "none";
     iconBox.classList.toggle("has-image", !!visible);
   }
@@ -1012,6 +1610,47 @@
     autoFitInputIds.forEach(id => fitOneLineInput(document.getElementById(id)));
   }
 
+  function memoTextareaOverflows(el) {
+    if (!el) return false;
+    return el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+  }
+
+  function getMemoMinFontSize() {
+    const raw = window.getComputedStyle(card).getPropertyValue("--memo-min-font-size").trim();
+    const parsed = parseFloat(raw);
+    return Number.isFinite(parsed) ? parsed : 6;
+  }
+
+  function fitMemoTextarea(el) {
+    if (!el) return;
+
+    // CSSで指定した標準サイズに戻してから、枠に収まるまで自動縮小します。
+    // 画像保存時に下の文字が切れないよう、スクロールではなく文字サイズ調整で対応します。
+    el.style.fontSize = "";
+
+    const value = el.value || "";
+    if (!value) {
+      el.scrollTop = 0;
+      return;
+    }
+
+    const computed = window.getComputedStyle(el);
+    const baseSize = parseFloat(computed.fontSize) || 18;
+    const minSize = Math.min(baseSize, getMemoMinFontSize());
+    let size = baseSize;
+
+    el.style.fontSize = `${size}px`;
+    while (memoTextareaOverflows(el) && size > minSize) {
+      size = Math.max(minSize, size - 0.5);
+      el.style.fontSize = `${size}px`;
+    }
+    el.scrollTop = 0;
+  }
+
+  function fitAllMemoTextareas() {
+    autoFitMemoIds.forEach(id => fitMemoTextarea(document.getElementById(id)));
+  }
+
   function songDisplayOverflows() {
     if (!songDisplay) return false;
     const overflowSelf = songDisplay.scrollWidth > songDisplay.clientWidth || songDisplay.scrollHeight > songDisplay.clientHeight;
@@ -1188,10 +1827,9 @@
 
     if (hasIconImage()) {
       const img = await loadImage(iconPreview.src);
-      const fit = fitMode.value === "contain" ? "contain" : "cover";
       const naturalW = img.naturalWidth || img.width;
       const naturalH = img.naturalHeight || img.height;
-      const baseScale = fit === "contain" ? Math.min(r.w / naturalW, r.h / naturalH) : Math.max(r.w / naturalW, r.h / naturalH);
+      const baseScale = Math.min(r.w / naturalW, r.h / naturalH);
       const baseW = naturalW * baseScale;
       const baseH = naturalH * baseScale;
       const baseX = r.x + (r.w - baseW) / 2;
@@ -1213,6 +1851,7 @@
   async function renderCardCanvas() {
     await (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
     fitAllOneLineInputs();
+    fitAllMemoTextareas();
     fitSongDisplay();
 
     const outputW = 1536;
@@ -1356,6 +1995,7 @@
         const cardInput = document.getElementById(cardId);
         cardInput.value = mobileInput.value;
         if (autoFitInputIds.includes(cardId)) fitOneLineInput(cardInput);
+        if (autoFitMemoIds.includes(cardId)) fitMemoTextarea(cardInput);
         saveState();
       });
     });
@@ -1364,10 +2004,14 @@
       setSelectedOshi(mobile.oshi.value);
       saveState();
     });
-    mobile.songPicker.addEventListener("change", () => {
-      addSong(mobile.songPicker.value);
-      mobile.songPicker.value = "";
-    });
+    if (mobile.songPicker) {
+      mobile.songPicker.addEventListener("change", () => {
+        addSong(mobile.songPicker.value);
+        mobile.songPicker.value = "";
+      });
+    }
+    const mobileOpenSongModal = document.getElementById("mOpenSongModal");
+    if (mobileOpenSongModal) mobileOpenSongModal.addEventListener("click", openSongModal);
     document.getElementById("mRemoveLastSong").addEventListener("click", () => {
       selectedSongs.pop();
       renderSongs();
@@ -1450,6 +2094,51 @@
     birthdayPicker.value = `2000-${month}-${day}`;
   }
 
+
+  function getDeviceProfileFromOption() {
+    const option = deviceSelect ? deviceSelect.options[deviceSelect.selectedIndex] : null;
+    const profile = option ? option.dataset.profile : "pc";
+    return deviceProfiles.includes(profile) ? profile : "pc";
+  }
+
+  function guessDeviceKey() {
+    if (!deviceSelect) return "pc";
+    const w = Math.min(window.screen?.width || window.innerWidth || 0, window.screen?.height || window.innerHeight || 0);
+    const h = Math.max(window.screen?.width || window.innerWidth || 0, window.screen?.height || window.innerHeight || 0);
+    if (!w || !h || w > 700) return "pc";
+    let best = null;
+    let bestScore = Number.POSITIVE_INFINITY;
+    Array.from(deviceSelect.options).forEach(option => {
+      if (option.value === "pc") return;
+      const profile = option.dataset.profile || "";
+      const match = profile.match(/^(\d+)x(\d+)$/);
+      if (!match) return;
+      const pw = Number(match[1]);
+      const ph = Number(match[2]);
+      const score = Math.abs(pw - w) + Math.abs(ph - h) * 0.35;
+      if (score < bestScore) {
+        bestScore = score;
+        best = option.value;
+      }
+    });
+    return best || "pc";
+  }
+
+  function applyDeviceSelection(deviceKey) {
+    if (!deviceSelect) return;
+    const exists = Array.from(deviceSelect.options).some(option => option.value === deviceKey);
+    deviceSelect.value = exists ? deviceKey : "pc";
+    const profile = getDeviceProfileFromOption();
+    card.classList.remove(...deviceProfileClasses);
+    card.classList.add(`profile-${profile}`);
+    card.dataset.deviceProfile = profile;
+    requestAnimationFrame(() => {
+      fitAllOneLineInputs();
+      fitAllMemoTextareas();
+      fitSongDisplay();
+    });
+  }
+
   function applyFontClass(className) {
     const selected = fontClasses.includes(className) ? className : "font-mincho-horror";
     card.classList.remove(...fontClasses);
@@ -1487,6 +2176,68 @@
     return "song-count-many";
   }
 
+
+  function renderSongOptions() {
+    if (!songOptionList) return;
+    songOptionList.innerHTML = "";
+    songList.forEach(song => {
+      const selected = selectedSongs.includes(song);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `song-option-button${selected ? " is-selected" : ""}`;
+      button.setAttribute("aria-pressed", selected ? "true" : "false");
+      button.dataset.song = song;
+
+      const check = document.createElement("span");
+      check.className = "checkmark";
+      check.textContent = selected ? "✓" : "";
+
+      const label = document.createElement("span");
+      label.className = "song-option-label";
+      label.textContent = song;
+
+      button.appendChild(check);
+      button.appendChild(label);
+      button.addEventListener("click", () => toggleSong(song));
+      songOptionList.appendChild(button);
+    });
+  }
+
+  function openSongModal() {
+    if (!songModal) return;
+    renderSongOptions();
+    songModal.classList.add("is-open");
+    document.body.classList.add("modal-open");
+    setTimeout(() => {
+      const firstSelected = songOptionList?.querySelector(".song-option-button.is-selected");
+      const firstButton = firstSelected || songOptionList?.querySelector(".song-option-button");
+      firstButton?.focus?.();
+    }, 30);
+  }
+
+  function closeSongModalPanel() {
+    if (!songModal) return;
+    songModal.classList.remove("is-open");
+    document.body.classList.remove("modal-open");
+    songDisplay?.focus?.();
+  }
+
+  function toggleSong(song) {
+    if (!song || !songList.includes(song)) return;
+    if (selectedSongs.includes(song)) {
+      selectedSongs = selectedSongs.filter(v => v !== song);
+    } else {
+      if (selectedSongs.length >= MAX_SONGS) {
+        alert("好きな曲は最大4曲まで選択できます。");
+        return;
+      }
+      selectedSongs.push(song);
+    }
+    renderSongs();
+    renderSongOptions();
+    saveState();
+  }
+
   function renderSongs() {
     songDisplay.classList.remove("song-count-0", "song-count-1", "song-count-2", "song-count-3", "song-count-4", "song-count-many");
     songDisplay.classList.add(songCountClass(selectedSongs.length));
@@ -1499,6 +2250,7 @@
     });
     requestAnimationFrame(fitSongDisplay);
     renderMobileSongs();
+    renderSongOptions();
   }
 
   function addSong(song) {
@@ -1534,13 +2286,12 @@
       setIconVisible(false);
       resetIconTransform(false);
     }
-    if (state.fitMode) {
-      fitMode.value = state.fitMode;
-      iconPreview.style.objectFit = state.fitMode;
-    }
+    iconPreview.style.objectFit = ICON_FIT_MODE;
     applyFontClass(state.fontClass || "font-mincho-horror");
     applyFontSizeClass();
+    applyDeviceSelection(state.deviceKey || guessDeviceKey());
     fitAllOneLineInputs();
+    fitAllMemoTextareas();
     syncMobileFromCard();
   }
 
@@ -1553,9 +2304,11 @@
     state.songs = selectedSongs;
     state.song = selectedSongs.join("／");
     state.iconDataUrl = iconPreview.src && iconPreview.style.display !== "none" ? iconPreview.src : "";
-    state.fitMode = fitMode.value;
+    state.fitMode = ICON_FIT_MODE;
     state.iconTransform = iconTransform;
     state.fontClass = fontSelect.value;
+    state.deviceKey = deviceSelect ? deviceSelect.value : "pc";
+    state.deviceProfile = getDeviceProfileFromOption();
     state.fontSizeClass = "font-size-xlarge";
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -1569,6 +2322,7 @@
     const el = document.getElementById(id);
     el.addEventListener("input", () => {
       if (autoFitInputIds.includes(id)) fitOneLineInput(el);
+      if (autoFitMemoIds.includes(id)) fitMemoTextarea(el);
       saveState();
       syncMobileFromCard();
     });
@@ -1578,9 +2332,35 @@
     saveState();
     syncMobileFromCard();
   });
-  songPicker.addEventListener("change", () => {
-    addSong(songPicker.value);
-    songPicker.value = "";
+  if (songPicker) {
+    songPicker.addEventListener("change", () => {
+      addSong(songPicker.value);
+      songPicker.value = "";
+    });
+  }
+  if (songDisplay) {
+    songDisplay.addEventListener("click", openSongModal);
+    songDisplay.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openSongModal();
+      }
+    });
+  }
+  if (songModal) {
+    songModal.addEventListener("click", (event) => {
+      if (event.target === songModal) closeSongModalPanel();
+    });
+  }
+  closeSongModal?.addEventListener("click", closeSongModalPanel);
+  doneSongModal?.addEventListener("click", closeSongModalPanel);
+  clearSongsInModal?.addEventListener("click", () => {
+    selectedSongs = [];
+    renderSongs();
+    saveState();
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && songModal?.classList.contains("is-open")) closeSongModalPanel();
   });
 
   fileInput.addEventListener("change", () => {
@@ -1597,17 +2377,19 @@
   });
 
 
-  fitMode.addEventListener("change", () => {
-    iconPreview.style.objectFit = fitMode.value;
-    saveState();
-  });
-
   fontSelect.addEventListener("change", () => {
     applyFontClass(fontSelect.value);
     fitAllOneLineInputs();
     fitSongDisplay();
     saveState();
   });
+
+  if (deviceSelect) {
+    deviceSelect.addEventListener("change", () => {
+      applyDeviceSelection(deviceSelect.value);
+      saveState();
+    });
+  }
 
   document.getElementById("removeLastSong").addEventListener("click", () => {
     selectedSongs.pop();
@@ -1641,6 +2423,7 @@
     selectedSongs = [];
     renderSongs();
     fitAllOneLineInputs();
+    fitAllMemoTextareas();
     saveState();
     syncMobileFromCard();
   });
@@ -1652,6 +2435,7 @@
 
   window.addEventListener("resize", () => {
     fitAllOneLineInputs();
+    fitAllMemoTextareas();
     fitSongDisplay();
   });
 
