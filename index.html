@@ -97,6 +97,7 @@
     color: var(--text);
     text-shadow: var(--entry-shadow);
     font-family: var(--entry-font);
+    font-weight: var(--entry-font-weight, 400);
     letter-spacing: .05em;
     caret-color: #fff;
   }
@@ -146,6 +147,7 @@
     color: var(--text);
     text-shadow: var(--entry-shadow);
     font-family: var(--entry-font);
+    font-weight: var(--entry-font-weight, 400);
     font-size: var(--oshi-font-size);
     line-height: 1;
     letter-spacing: .02em;
@@ -678,35 +680,46 @@
   }
 
   /* フォント選択：Google Fonts + 端末フォント。body側にも同じクラスを付けてフォーム入力欄にも反映します。 */
-  .card.font-mincho-horror,
-  body.font-mincho-horror {
-    --entry-font: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", "Yu Gothic", "Meiryo", serif;
-    --form-entry-font: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", "Yu Gothic", "Meiryo", serif;
-    --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.15);
+  /* 端末フォント：iPhone / Androidでも比較的安定して使える標準フォントに整理 */
+  .card.font-basic-mincho,
+  body.font-basic-mincho {
+    --entry-font: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "MS Mincho", "Noto Serif JP", serif;
+    --form-entry-font: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "MS Mincho", "Noto Serif JP", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
+    --entry-shadow: 1px 1px 0 #000, 0 0 4px rgba(255,255,255,.12);
+  }
+  .card.font-basic-mincho-bold,
+  body.font-basic-mincho-bold {
+    --entry-font: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "MS Mincho", "Noto Serif JP", serif;
+    --form-entry-font: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "MS Mincho", "Noto Serif JP", serif;
+    --entry-font-weight: 700;
+    --form-entry-font-weight: 700;
+    --entry-shadow: 2px 2px 0 #000, 0 0 5px rgba(255,255,255,.16);
+  }
+  .card.font-basic-gothic,
+  body.font-basic-gothic {
+    --entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+    --form-entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
+    --entry-shadow: 1px 1px 0 #000, 0 0 4px rgba(255,255,255,.12);
+  }
+  .card.font-basic-gothic-bold,
+  body.font-basic-gothic-bold {
+    --entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+    --form-entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+    --entry-font-weight: 700;
+    --form-entry-font-weight: 700;
+    --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
   }
   .card.font-retro-dot,
   body.font-retro-dot {
     --entry-font: "DotGothic16", "MS Gothic", "Yu Gothic Mono", "Consolas", monospace;
     --form-entry-font: "DotGothic16", "MS Gothic", "Yu Gothic Mono", "Consolas", monospace;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000;
-  }
-  .card.font-bold-gothic,
-  body.font-bold-gothic {
-    --entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-    --form-entry-font: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-    --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
-  }
-  .card.font-brush-horror,
-  body.font-brush-horror {
-    --entry-font: "HG行書体", "HGP行書体", "HGS行書体", "Yu Mincho", "MS Mincho", serif;
-    --form-entry-font: "HG行書体", "HGP行書体", "HGS行書体", "Yu Mincho", "MS Mincho", serif;
-    --entry-shadow: 1px 1px 0 #000, 0 0 6px rgba(255,255,255,.2);
-  }
-  .card.font-hand-horror,
-  body.font-hand-horror {
-    --entry-font: "HGS教科書体", "HG教科書体", "Yu Mincho", "MS Mincho", serif;
-    --form-entry-font: "HGS教科書体", "HG教科書体", "Yu Mincho", "MS Mincho", serif;
-    --entry-shadow: 1px 1px 0 #000, 0 0 4px rgba(255,255,255,.16);
   }
 
   /* Google Fonts：日本語向け */
@@ -714,42 +727,56 @@
   body.font-yuji-syuku {
     --entry-font: "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
     --form-entry-font: "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
   .card.font-new-tegomin,
   body.font-new-tegomin {
     --entry-font: "New Tegomin", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
     --form-entry-font: "New Tegomin", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000, 0 0 6px rgba(255,255,255,.16);
   }
   .card.font-hina-mincho,
   body.font-hina-mincho {
     --entry-font: "Hina Mincho", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
     --form-entry-font: "Hina Mincho", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
   }
   .card.font-kaisei-decol,
   body.font-kaisei-decol {
     --entry-font: "Kaisei Decol", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
     --form-entry-font: "Kaisei Decol", "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
   }
   .card.font-zen-kurenaido,
   body.font-zen-kurenaido {
     --entry-font: "Zen Kurenaido", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
     --form-entry-font: "Zen Kurenaido", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 1px 1px 0 #000, 0 0 5px rgba(255,255,255,.14);
   }
   .card.font-reggae-one,
   body.font-reggae-one {
     --entry-font: "Reggae One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
     --form-entry-font: "Reggae One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
   }
   .card.font-dela-gothic,
   body.font-dela-gothic {
     --entry-font: "Dela Gothic One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
     --form-entry-font: "Dela Gothic One", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 6px rgba(255,255,255,.18);
   }
 
@@ -758,30 +785,40 @@
   body.font-creepster {
     --entry-font: "Creepster", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
     --form-entry-font: "Creepster", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
   .card.font-nosifer,
   body.font-nosifer {
     --entry-font: "Nosifer", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
     --form-entry-font: "Nosifer", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
   .card.font-eater,
   body.font-eater {
     --entry-font: "Eater", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
     --form-entry-font: "Eater", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
   .card.font-butcherman,
   body.font-butcherman {
     --entry-font: "Butcherman", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
     --form-entry-font: "Butcherman", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
   .card.font-rubik-wet,
   body.font-rubik-wet {
     --entry-font: "Rubik Wet Paint", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
     --form-entry-font: "Rubik Wet Paint", "Yuji Syuku", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --entry-font-weight: 400;
+    --form-entry-font-weight: 400;
     --entry-shadow: 2px 2px 0 #000, 0 0 7px rgba(255,255,255,.18);
   }
 
@@ -802,6 +839,7 @@
     color: var(--text);
     text-shadow: var(--entry-shadow);
     font-family: var(--entry-font);
+    font-weight: var(--entry-font-weight, 400);
     letter-spacing: .02em;
     text-align: center;
     pointer-events: none;
@@ -963,6 +1001,7 @@
     font-size: 16px;
     line-height: 1.4;
     font-family: var(--form-entry-font, "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif);
+    font-weight: var(--form-entry-font-weight, 400);
     outline: none;
   }
   .mobile-editor textarea {
@@ -972,6 +1011,7 @@
   .mobile-selected-list,
   .song-option-button {
     font-family: var(--form-entry-font, "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif);
+    font-weight: var(--form-entry-font-weight, 400);
   }
   .mobile-actions {
     display: flex;
@@ -1275,11 +1315,11 @@
       <input id="fileInput" type="file" accept="image/*">
       <select id="fontSelect" title="入力文字のフォント">
         <optgroup label="基本フォント">
-          <option value="font-mincho-horror">明朝ホラー（端末）</option>
+          <option value="font-basic-mincho">明朝体</option>
+          <option value="font-basic-mincho-bold">明朝体（太字）</option>
+          <option value="font-basic-gothic">ゴシック体</option>
+          <option value="font-basic-gothic-bold">ゴシック体（太字）</option>
           <option value="font-retro-dot">レトロドット風（Google）</option>
-          <option value="font-bold-gothic">太字ゴシック（端末）</option>
-          <option value="font-brush-horror">筆文字ホラー（端末）</option>
-          <option value="font-hand-horror">手書きホラー（端末）</option>
         </optgroup>
         <optgroup label="日本語ホラー・レトロ風 Google Fonts">
           <option value="font-yuji-syuku">怪談筆文字：Yuji Syuku</option>
@@ -1303,6 +1343,7 @@
         <option value="おともだち">おともだち</option>
         <option value="キミと××××したいだけ">キミと××××したいだけ</option>
         <option value="魔性少女">魔性少女</option>
+        <option value="ホラークイーン">ホラークイーン</option>
         <option value="花喰み">花喰み</option>
         <option value="乙女心中">乙女心中</option>
         <option value="ゾクゾク">ゾクゾク</option>
@@ -1314,14 +1355,13 @@
         <option value="薔薇色の月">薔薇色の月</option>
         <option value="もーいーかい？">もーいーかい？</option>
         <option value="輪廻る">輪廻る</option>
-	<option value="ホラークイーン">ホラークイーン</option>
       </select>
       <button type="button" id="removeLastSong" hidden>最後の曲を削除</button>
       <button type="button" id="clearSongs" hidden>曲を消す</button>
       <button type="button" id="savePng">保存</button>
     </div>
 
-    <div class="card font-mincho-horror font-size-xlarge profile-pc" id="card">
+    <div class="card font-basic-mincho font-size-xlarge profile-pc" id="card">
       <div id="iconBox" class="icon-box" title="画像をドラッグで移動、ピンチまたはホイールで拡大縮小">
         <img id="iconPreview" class="icon-preview" alt="アイコン画像" draggable="false">
         <label class="icon-hit" for="fileInput" title="クリックして画像を選択"></label>
@@ -1473,11 +1513,17 @@
   const deviceSelect = document.getElementById("deviceSelect");
   const fontSizeSelect = document.getElementById("fontSizeSelect"); // v15では文字サイズ選択UIは削除し、特大固定
   const fontClasses = [
-    "font-mincho-horror", "font-retro-dot", "font-bold-gothic", "font-brush-horror", "font-hand-horror",
+    "font-basic-mincho", "font-basic-mincho-bold", "font-basic-gothic", "font-basic-gothic-bold", "font-retro-dot",
     "font-yuji-syuku", "font-new-tegomin", "font-hina-mincho", "font-kaisei-decol", "font-zen-kurenaido",
     "font-reggae-one", "font-dela-gothic",
     "font-creepster", "font-nosifer", "font-eater", "font-butcherman", "font-rubik-wet"
   ];
+  const legacyFontMap = {
+    "font-mincho-horror": "font-basic-mincho",
+    "font-brush-horror": "font-basic-mincho",
+    "font-hand-horror": "font-basic-mincho",
+    "font-bold-gothic": "font-basic-gothic-bold"
+  };
   const fontSizeClasses = ["font-size-small", "font-size-normal", "font-size-large", "font-size-xlarge"];
   const deviceProfiles = ["pc", "320x568", "375x667", "375x812", "390x844", "393x852", "402x874", "414x736", "414x896", "420x912", "428x926", "430x932", "440x956"];
   const deviceProfileClasses = deviceProfiles.map(profile => `profile-${profile}`);
@@ -2081,7 +2127,7 @@
     mobile.age.value = document.getElementById("age").value || "";
     mobile.gender.value = document.getElementById("gender").value || "";
     mobile.birthday.value = birthday.value || "";
-    if (mobile.font) mobile.font.value = fontSelect.value || "font-mincho-horror";
+    if (mobile.font) mobile.font.value = fontSelect.value || "font-basic-mincho";
     mobile.oshi.value = oshiSelect.value || "";
     mobile.songPicker.value = "";
     mobile.favoritePoint.value = document.getElementById("favoritePoint").value || "";
@@ -2285,9 +2331,10 @@
   }
 
   function applyFontClass(className) {
-    const selected = fontClasses.includes(className) ? className : "font-mincho-horror";
-    card.classList.remove(...fontClasses);
-    document.body.classList.remove(...fontClasses);
+    const mappedClassName = legacyFontMap[className] || className;
+    const selected = fontClasses.includes(mappedClassName) ? mappedClassName : "font-basic-mincho";
+    card.classList.remove(...fontClasses, ...Object.keys(legacyFontMap));
+    document.body.classList.remove(...fontClasses, ...Object.keys(legacyFontMap));
     card.classList.add(selected);
     document.body.classList.add(selected);
     fontSelect.value = selected;
@@ -2436,7 +2483,7 @@
       resetIconTransform(false);
     }
     iconPreview.style.objectFit = ICON_FIT_MODE;
-    applyFontClass(state.fontClass || "font-mincho-horror");
+    applyFontClass(state.fontClass || "font-basic-mincho");
     applyFontSizeClass();
     applyDeviceSelection(state.deviceKey || guessDeviceKey());
     fitAllOneLineInputs();

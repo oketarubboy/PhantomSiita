@@ -1,31 +1,16 @@
-ハイネ自己紹介カード v25 Google Fonts版
+ハイネ自己紹介カード GitHub Pages 公開用
 
-内容:
-- index.html
-- .nojekyll
-- README_fonts.txt
+このZIPの中身をGitHub Pages用リポジトリのルートにアップロードしてください。
 
-フォントについて:
-このZIPにはフォントファイル本体は入れていません。
-index.html から Google Fonts を読み込む設定を追加しています。
-GitHub Pagesで公開すると、インターネット経由で下記フォントが読み込まれます。
+フォントについて
+- 端末フォントは、スマホでも比較的安定して使える以下に整理しています。
+  - 明朝体
+  - 明朝体（太字）
+  - ゴシック体
+  - ゴシック体（太字）
+- Google Fontsのホラー・レトロ風フォントは index.html から読み込みます。
+- 通信できない環境では端末フォントにフォールバックします。
 
-追加した主なフォント:
-- Yuji Syuku
-- New Tegomin
-- Hina Mincho
-- Kaisei Decol
-- Zen Kurenaido
-- Reggae One
-- Dela Gothic One
-- DotGothic16
-- Creepster
-- Nosifer
-- Eater
-- Butcherman
-- Rubik Wet Paint
-
-注意:
-- iPhone / Android でも、Google Fontsが読み込める通信環境なら選択できます。
-- オフラインや通信制限中は端末標準フォントにフォールバックします。
-- 日本語に対応していない英字ホラーフォントは、英数字のみホラー調になり、日本語は後ろに指定した日本語フォントで表示されます。
+注意
+- 日本語フォントは端末やブラウザにより表示差があります。
+- PNG保存前にフォントが読み込まれている状態で保存してください。
